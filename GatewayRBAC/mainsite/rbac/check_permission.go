@@ -20,10 +20,16 @@ func CheckRoutePermission(ctx iris.Context) {
 		ctx.ViewData(session.AUTHINFO, authinfo)
 	}
 
-	//Nếu route nằm trong public routes thì cho qua luôn
+	//Nếu route nằm trong public routes
 	if publicRoutes[route] {
-		ctx.Next()
-		return
+		// và cấu hình cho phép các route không nằm trong routesRoles
+		if config.MakeUnassignedRoutePublic {
+			ctx.Next()
+			return
+		} else {
+			logger.Log(ctx, eris.Warning("Đường dẫn này chưa cấu hình phân quyền").UnAuthorized())
+			return
+		}
 	}
 
 	//Chưa đăng nhập mà đòi vào protected route, vậy phải kick ra
