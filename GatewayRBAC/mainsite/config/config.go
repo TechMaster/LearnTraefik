@@ -29,6 +29,10 @@ type Configuration struct {
 		Prefix      string `json:"prefix"`
 	} `json:"redis"`
 
+	Authservice struct { //Kết nối đến dịch vụ Auth service
+		Host string `json:"host"`
+	} `json:"authservice"`
+
 	Authenticate struct {
 		MaxAccessFailed      int32 `json:"max_access_failed"`
 		LockoutInMinutes     int   `json:"lockout_in_minutes"`

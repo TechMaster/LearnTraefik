@@ -8,7 +8,10 @@ import (
 )
 
 func RegisterRoute(app *iris.Application) {
+
 	app.Get("/", controller.ShowHomePage) //Không dùng rbac có nghĩa là public method
+	app.Post("/login", controller.Login)
+	rbac.Get(app, "/logout", rbac.AllowAll(), controller.LogoutFromWeb)
 
 	blog := app.Party("/blog")
 	{

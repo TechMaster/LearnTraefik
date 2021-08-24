@@ -22,13 +22,20 @@
       <li>{{.}}</li>
     {{end}}
   </ul>
-  <a href="javascript:logout()">Logout</a>
+  <a href="/logout">Logout</a>
   {{ else }}
-  <h1>Login using JSON</h1>
+  <h1>Đăng nhập = gọi axios vào auth.iris.com</h1>
   User : <input type="text" id="Email"> <br>
   Pass : <input type="text" id="Pass"> <br><br>
   <button onclick="login();">Login</button>
   <p id="result"></p>
+
+  <h1>Đăng nhập bằng cách gọi vào API của Auth service</h1>
+  <form action="/login" method="post">
+    User : <input type="text" name="Email"> <br>
+    Pass : <input type="text" name="Pass"> <br><br>
+    <input type="submit" value="Submit">  
+  </form>
   {{ end }}
 
 
@@ -62,7 +69,7 @@
   <script>
     function login() {
       axios.defaults.withCredentials = true;
-      axios.post('http://auth.iris.com/loginjson', {
+      axios.post('http://auth.iris.com/api/login', {
         Email: $("#Email").val(),
         Pass: $("#Pass").val()
       }).then(response => {
@@ -73,7 +80,7 @@
     }
     function logout() {
       axios.defaults.withCredentials = true;
-      axios.get('http://auth.iris.com/logoutjson').then(response => {
+      axios.get('http://auth.iris.com/api/logout').then(response => {
         location.reload();
       }).catch(response => {
         $("#result").html(response.data).css('color', 'red');

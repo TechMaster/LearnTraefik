@@ -26,6 +26,7 @@ func main() {
 
 	rbacConfig := rbac.NewConfig()
 	rbacConfig.RootAllow = false
+	rbacConfig.MakeUnassignedRoutePublic = true
 	rbac.Init(rbacConfig) //Khởi động với cấu hình mặc định
 
 	//đặt hàm này trên các hàm đăng ký route - controller
@@ -39,6 +40,6 @@ func main() {
 
 	//Luôn để hàm này sau tất cả lệnh cấu hình đường dẫn với RBAC
 	rbac.BuildPublicRoute(app)
-	rbac.DebugRouteRole()
+	//rbac.DebugRouteRole()
 	_ = app.Listen(config.Config.Port)
 }

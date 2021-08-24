@@ -17,6 +17,9 @@
         "idle_timeout": 5,
         "prefix": ""
     },
+    "authservice": {
+        "host": "http://localhost:3000"
+    },
     "authenticate": {
         "max_access_failed": 5,
         "lockout_in_minutes": 1,
