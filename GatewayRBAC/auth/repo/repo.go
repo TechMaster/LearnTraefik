@@ -1,9 +1,10 @@
 package repo
 
 import (
-	"auth/pmodel"
-	"auth/rbac"
 	"errors"
+
+	"github.com/TechMaster/core/pmodel"
+	"github.com/TechMaster/core/rbac"
 )
 
 var users = []pmodel.User{

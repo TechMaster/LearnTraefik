@@ -1,11 +1,11 @@
 package session
 
 import (
-	"mainsite/config"
 	"time"
 
 	"github.com/kataras/iris/v12/sessions"
 	"github.com/kataras/iris/v12/sessions/sessiondb/redis"
+	"github.com/spf13/viper"
 )
 
 const (
@@ -25,16 +25,15 @@ var Sess = sessions.New(sessions.Config{
 })
 
 func InitSession() *redis.Database {
-	redisConfig := config.Config.Redis
 
 	redisDB := redis.New(redis.Config{
-		Network:   redisConfig.Network,
-		Addr:      redisConfig.Addr,
-		Password:  redisConfig.Password,
-		Database:  redisConfig.Database,
-		MaxActive: redisConfig.MaxActive,
-		Timeout:   time.Duration(redisConfig.IdleTimeout) * time.Minute,
-		Prefix:    redisConfig.Prefix,
+		Network:   viper.GetString("redis.network"),
+		Addr:      viper.GetString("redis.addr"),
+		Password:  viper.GetString("redis.password"),
+		Database:  viper.GetString("redis.database"),
+		MaxActive: viper.GetInt("redis.max_active"),
+		Timeout:   time.Duration(viper.GetInt("redis.idle_timeout")) * time.Minute,
+		Prefix:    viper.GetString("redis.prefix"),
 		Driver:    redis.GoRedis(),
 	})
 

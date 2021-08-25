@@ -9,6 +9,7 @@ import (
 
 	"github.com/TechMaster/logger"
 	"github.com/kataras/iris/v12"
+	"github.com/spf13/viper"
 )
 
 func main() {
@@ -41,5 +42,5 @@ func main() {
 	//Luôn để hàm này sau tất cả lệnh cấu hình đường dẫn với RBAC
 	rbac.BuildPublicRoute(app)
 	//rbac.DebugRouteRole()
-	_ = app.Listen(config.Config.Port)
+	_ = app.Listen(viper.GetString("port"))
 }

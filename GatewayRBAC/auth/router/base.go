@@ -2,7 +2,7 @@ package router
 
 import (
 	"auth/controller"
-	"auth/rbac"
+	"github.com/TechMaster/core/rbac"
 
 	"github.com/kataras/iris/v12"
 )

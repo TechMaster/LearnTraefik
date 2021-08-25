@@ -1,8 +1,9 @@
 package controller
 
 import (
-	"auth/pmodel"
 	"auth/repo"
+
+	"github.com/TechMaster/core/pmodel"
 
 	"github.com/TechMaster/eris"
 	"github.com/TechMaster/logger"

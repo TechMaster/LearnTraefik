@@ -1,11 +1,12 @@
 package controller
 
 import (
-	"auth/pmodel"
-	"auth/rbac"
 	"auth/repo"
-	"auth/session"
 	"fmt"
+
+	"github.com/TechMaster/core/pmodel"
+	"github.com/TechMaster/core/rbac"
+	"github.com/TechMaster/core/session"
 
 	"github.com/kataras/iris/v12"
 )
