@@ -1,11 +1,12 @@
 package main
 
 import (
-	"mainsite/config"
-	"mainsite/rbac"
 	"mainsite/router"
-	"mainsite/session"
-	"mainsite/template"
+
+	"github.com/TechMaster/core/config"
+	"github.com/TechMaster/core/rbac"
+	"github.com/TechMaster/core/session"
+	"github.com/TechMaster/core/template"
 
 	"github.com/TechMaster/logger"
 	"github.com/kataras/iris/v12"

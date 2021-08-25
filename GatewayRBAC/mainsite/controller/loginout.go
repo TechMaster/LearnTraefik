@@ -1,12 +1,11 @@
 package controller
 
 import (
-	"mainsite/pmodel"
-	"mainsite/resto"
-	"mainsite/session"
-	"net/http"
+	"encoding/json"
 
-	json "github.com/goccy/go-json"
+	"github.com/TechMaster/core/pmodel"
+	"github.com/TechMaster/core/resto"
+	"github.com/TechMaster/core/session"
 	"github.com/spf13/viper"
 
 	"github.com/TechMaster/eris"
@@ -29,13 +28,12 @@ func Login(ctx iris.Context) {
 		return
 	}
 
-	response, err := resto.Post(viper.GetString("authservice.host")+"/api/login", loginReq)
+	response, err := resto.Retry(5, 1000).Post(viper.GetString("authservice.host")+"/api/login", loginReq)
 	if err != nil {
 		logger.Log(ctx, eris.NewFromMsg(err, "Lỗi khi gọi Auth service").InternalServerError())
 		return
 	}
-
-	if response.StatusCode != http.StatusOK { //Đăng nhập lỗi
+	if response.StatusCode != iris.StatusOK {
 		var res struct {
 			Error string `json:"error"`
 		}

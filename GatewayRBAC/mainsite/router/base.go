@@ -2,7 +2,8 @@ package router
 
 import (
 	"mainsite/controller"
-	"mainsite/rbac"
+
+	"github.com/TechMaster/core/rbac"
 
 	"github.com/kataras/iris/v12"
 )

@@ -1,8 +1,9 @@
 package controller
 
 import (
-	"mainsite/rbac"
-	"mainsite/session"
+	"github.com/TechMaster/core/session"
+
+	"github.com/TechMaster/core/rbac"
 
 	"github.com/kataras/iris/v12"
 )
