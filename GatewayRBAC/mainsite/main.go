@@ -22,7 +22,7 @@ func main() {
 		defer logFile.Close()
 	}
 
-	redisDb := session.InitSession()
+	redisDb := session.InitRedisSession()
 	defer redisDb.Close()
 	app.Use(session.Sess.Handler())
 

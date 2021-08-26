@@ -16,7 +16,7 @@
 
 <body>
   {{ if .authinfo }}
-  <h1>Welcome {{ .authinfo.User }}</h1>
+  <h1>Welcome {{ .authinfo.FullName }}</h1>
   <ul>
     {{range .roles}}
       <li>{{.}}</li>

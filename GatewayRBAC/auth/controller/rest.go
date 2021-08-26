@@ -3,6 +3,7 @@ package controller
 import (
 	"auth/repo"
 
+	"github.com/TechMaster/core/pass"
 	"github.com/TechMaster/core/pmodel"
 
 	"github.com/TechMaster/eris"
@@ -28,16 +29,17 @@ func LoginREST(ctx iris.Context) {
 		return
 	}
 
-	if user.Pass != loginReq.Pass {
-		logger.Log(ctx, eris.Warning("Wrong password").UnAuthorized())
+	if !pass.CheckPassword(loginReq.Pass, user.Password, "") {
+		_, _ = ctx.WriteString("Wrong password")
 		return
 	}
 
 	//Login thành công thì quay về trang chủ
 	_, _ = ctx.JSON(pmodel.AuthenInfo{
-		User:  user.User,
-		Email: user.Email,
-		Roles: user.Roles,
+		Id:       user.Id,
+		FullName: user.FullName,
+		Email:    user.Email,
+		Roles:    pmodel.IntArrToRoles(user.Roles), //Chuyển từ mảng []int sang map[int]bool
 	})
 }
 

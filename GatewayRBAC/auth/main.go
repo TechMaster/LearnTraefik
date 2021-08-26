@@ -23,7 +23,7 @@ func main() {
 		defer logFile.Close()
 	}
 
-	redisDb := session.InitSession()
+	redisDb := session.InitRedisSession()
 	defer redisDb.Close()
 
 	crs := cors.New(cors.Options{

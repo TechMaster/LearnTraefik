@@ -4,6 +4,7 @@ import (
 	"auth/repo"
 	"fmt"
 
+	"github.com/TechMaster/core/pass"
 	"github.com/TechMaster/core/pmodel"
 	"github.com/TechMaster/core/rbac"
 	"github.com/TechMaster/core/session"
@@ -49,19 +50,20 @@ func Login(ctx iris.Context) {
 
 	user, err := repo.QueryByEmail(loginReq.Email)
 	if err != nil { //Không tìm thấy user
-		_, _ = ctx.WriteString("Login Failed")
+		_, _ = ctx.WriteString("User Not Found")
 		return
 	}
 
-	if user.Pass != loginReq.Pass {
+	if !pass.CheckPassword(loginReq.Pass, user.Password, "") {
 		_, _ = ctx.WriteString("Wrong password")
 		return
 	}
 
 	session.SetAuthenticated(ctx, pmodel.AuthenInfo{
-		User:  user.User,
-		Email: user.Email,
-		Roles: user.Roles,
+		Id:       user.Id,
+		FullName: user.FullName,
+		Email:    user.Email,
+		Roles:    pmodel.IntArrToRoles(user.Roles), //Chuyển từ mảng []int sang map[int]bool
 	})
 
 	//Login thành công thì quay về trang chủ

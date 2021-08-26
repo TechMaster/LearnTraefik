@@ -2,64 +2,43 @@ package repo
 
 import (
 	"errors"
+	"strings"
 
+	"github.com/TechMaster/core/pass"
 	"github.com/TechMaster/core/pmodel"
 	"github.com/TechMaster/core/rbac"
+	"github.com/segmentio/ksuid"
 )
 
-var users = []pmodel.User{
-	{
-		User:  "root",
-		Pass:  "1",
-		Email: "root@gmail.com",
-		Roles: pmodel.Roles{rbac.ROOT: true},
-	},
-	{
-		User:  "admin",
-		Pass:  "1",
-		Email: "admin@gmail.com",
-		Roles: pmodel.Roles{rbac.ADMIN: true},
-	},
-	{
-		User:  "huy",
-		Pass:  "1",
-		Email: "huy@gmail.com",
-		Roles: pmodel.Roles{rbac.TRAINER: true},
-	},
-	{
-		User:  "hien",
-		Pass:  "1",
-		Email: "hien@gmail.com",
-		Roles: pmodel.Roles{rbac.SYSOP: true, rbac.TRAINER: true},
-	},
-	{
-		User:  "hung",
-		Pass:  "1",
-		Email: "hung@gmail.com",
-		Roles: pmodel.Roles{rbac.STUDENT: true},
-	},
-	{
-		User:  "man",
-		Pass:  "1",
-		Email: "man@gmail.com",
-		Roles: pmodel.Roles{rbac.SALE: true, rbac.EDITOR: true},
-	},
+var users = make(map[string]*pmodel.User)
 
-	{
-		User:  "vuong",
-		Pass:  "1",
-		Email: "vuong@gmail.com",
-		Roles: pmodel.Roles{rbac.EMPLOYER: true},
-	},
+func init() {
+	CreateNewUser("Bùi Văn Hiên", "1", "hien@gmail.com", "0123456789", rbac.TRAINER, rbac.MAINTAINER)
+	CreateNewUser("Nguyễn Hàn Duy", "1", "duy@gmail.com", "0123456786", rbac.TRAINER, rbac.STUDENT)
+	CreateNewUser("Phạm Thị Mẫn", "1", "man@gmail.com", "0123456780", rbac.SALE, rbac.STUDENT)
+	CreateNewUser("Trịnh Minh Cường", "1", "cuong@gmail.com", "0123456000", rbac.ADMIN, rbac.TRAINER)
+	CreateNewUser("Nguyễn Thành Long", "1", "long@gmail.com", "0123456001", rbac.STUDENT)
 }
 
-func QueryByEmail(email string) (user *pmodel.User, err error) {
-	for _, obj := range users {
-		if obj.Email == email {
-			user = new(pmodel.User)
-			*user = obj
-			return user, nil
-		}
+func CreateNewUser(fullName string, password string, email string, phone string, roles ...int) {
+	hassedpass, _ := pass.HashBcryptPass(password)
+
+	user := pmodel.User{
+		Id:       ksuid.New().String(),
+		FullName: fullName,
+		Password: hassedpass,
+		Email:    strings.ToLower(email),
+		Phone:    phone,
+		Roles:    roles,
 	}
-	return nil, errors.New("User not found")
+
+	users[user.Email] = &user //Thêm user vào users
+}
+func QueryByEmail(email string) (user *pmodel.User, err error) {
+	user = users[strings.ToLower(email)]
+	if user == nil {
+		return nil, errors.New("User not found")
+	} else {
+		return user, nil
+	}
 }

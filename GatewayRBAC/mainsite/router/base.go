@@ -18,10 +18,10 @@ func RegisterRoute(app *iris.Application) {
 	{
 		blog.Get("/", controller.GetAllPosts) //Không dùng rbac có nghĩa là public method
 		rbac.Get(blog, "/all", rbac.AllowAll(), controller.GetAllPosts)
-		rbac.Get(blog, "/create", rbac.Forbid(rbac.MAINTAINER, rbac.SYSOP), controller.GetAllPosts)
+		rbac.Get(blog, "/create", rbac.Forbid(rbac.MAINTAINER), controller.GetAllPosts)
 		rbac.Get(blog, "/{id:int}", rbac.Allow(rbac.AUTHOR, rbac.EDITOR), controller.GetPostByID)
 		rbac.Get(blog, "/delete/{id:int}", rbac.Allow(rbac.ADMIN, rbac.AUTHOR, rbac.EDITOR), controller.DeletePostByID)
-		rbac.Any(blog, "/any", rbac.Allow(rbac.SYSOP), controller.PostMiddleware)
+		rbac.Any(blog, "/any", rbac.Allow(rbac.MAINTAINER), controller.PostMiddleware)
 	}
 
 	student := app.Party("/student")
@@ -36,9 +36,9 @@ func RegisterRoute(app *iris.Application) {
 
 	sysop := app.Party("/sysop")
 	{
-		rbac.Get(sysop, "/backupdb", rbac.Allow(rbac.SYSOP), controller.BackupDB)
-		rbac.Get(sysop, "/upload", rbac.Allow(rbac.MAINTAINER, rbac.SYSOP), controller.ShowUploadForm)
-		rbac.Post(sysop, "/upload", rbac.Allow(rbac.MAINTAINER, rbac.SYSOP, rbac.SALE), iris.LimitRequestBodySize(300000), controller.UploadPhoto)
+		rbac.Get(sysop, "/backupdb", rbac.Allow(rbac.MAINTAINER), controller.BackupDB)
+		rbac.Get(sysop, "/upload", rbac.Allow(rbac.MAINTAINER), controller.ShowUploadForm)
+		rbac.Post(sysop, "/upload", rbac.Allow(rbac.MAINTAINER, rbac.SALE), iris.LimitRequestBodySize(300000), controller.UploadPhoto)
 	}
 
 	sales := app.Party("/sale")

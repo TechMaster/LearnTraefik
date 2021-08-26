@@ -8,7 +8,7 @@
 </head>
 <body>
   {{ if .authinfo }}
-    <h1>Welcome {{ .authinfo.User }}</h1>
+    <h1>Welcome {{ .authinfo.FullName }}</h1>
     <ul>
       {{range .roles}}
         <li>{{.}}</li>
@@ -28,49 +28,11 @@
 
   <h2>Danh sách user</h2>
   <pre>
-    {
-      User:  "root",
-      Pass:  "1",
-      Email: "root@gmail.com",
-      Roles: pmodel.Roles{rbac.ROOT: true},
-    },
-    {
-      User:  "admin",
-      Pass:  "1",
-      Email: "admin@gmail.com",
-      Roles: pmodel.Roles{rbac.ADMIN: true},
-    },
-    {
-      User:  "huy",
-      Pass:  "1",
-      Email: "huy@gmail.com",
-      Roles: pmodel.Roles{rbac.TRAINER: true},
-    },
-    {
-      User:  "hien",
-      Pass:  "1",
-      Email: "hien@gmail.com",
-      Roles: pmodel.Roles{rbac.SYSOP: true, rbac.TRAINER: true},
-    },
-    {
-      User:  "hung",
-      Pass:  "1",
-      Email: "hung@gmail.com",
-      Roles: pmodel.Roles{rbac.STUDENT: true},
-    },
-    {
-      User:  "man",
-      Pass:  "1",
-      Email: "man@gmail.com",
-      Roles: pmodel.Roles{rbac.SALE: true, rbac.EDITOR: true},
-    },
-  
-    {
-      User:  "vuong",
-      Pass:  "1",
-      Email: "vuong@gmail.com",
-      Roles: pmodel.Roles{rbac.EMPLOYER: true},
-    }
+    CreateNewUser("Bùi Văn Hiên", "1", "hien@gmail.com", "0123456789", rbac.TRAINER, rbac.MAINTAINER)
+    CreateNewUser("Nguyễn Hàn Duy", "1", "duy@gmail.com", "0123456786", rbac.TRAINER, rbac.STUDENT)
+    CreateNewUser("Phạm Thị Mẫn", "1", "man@gmail.com", "0123456780", rbac.SALE, rbac.STUDENT)
+    CreateNewUser("Trịnh Minh Cường", "1", "cuong@gmail.com", "0123456000", rbac.ADMIN, rbac.TRAINER)
+    CreateNewUser("Nguyễn Thành Long", "1", "long@gmail.com", "0123456001", rbac.STUDENT)
   </pre>
 </body>
 </html>
