@@ -9,7 +9,7 @@ import (
 )
 
 func ShowHomePage(ctx iris.Context) {
-	if authinfo := session.GetAuthInfoViewData(ctx); authinfo != nil {
+	if authinfo := session.GetAuthInfo(ctx); authinfo != nil {
 		ctx.ViewData("roles", rbac.RolesNames(authinfo.Roles))
 	}
 

@@ -50,7 +50,10 @@ func Login(ctx iris.Context) {
 	}
 
 	//Phải lưu authentication ở đây chứ không phải ở auth service !
-	session.SetAuthenticated(ctx, authInfo)
+	if err := session.SetAuthenticated(ctx, authInfo); err != nil {
+		logger.Log(ctx, eris.NewFromMsg(err, "Không thể tạo session đăng nhập").InternalServerError())
+		return
+	}
 
 	//Login thành công thì quay về trang chủ
 	ctx.Redirect("/")

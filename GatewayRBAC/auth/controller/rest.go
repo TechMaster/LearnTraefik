@@ -5,6 +5,7 @@ import (
 
 	"github.com/TechMaster/core/pass"
 	"github.com/TechMaster/core/pmodel"
+	"github.com/TechMaster/core/session"
 
 	"github.com/TechMaster/eris"
 	"github.com/TechMaster/logger"
@@ -44,6 +45,6 @@ func LoginREST(ctx iris.Context) {
 }
 
 func LogoutREST(ctx iris.Context) {
-	logout(ctx)
+	session.Logout(ctx)
 	_, _ = ctx.JSON("Logout success")
 }

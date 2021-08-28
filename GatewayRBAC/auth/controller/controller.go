@@ -4,6 +4,7 @@ import (
 	"auth/repo"
 	"fmt"
 
+	"github.com/TechMaster/core/logger"
 	"github.com/TechMaster/core/pass"
 	"github.com/TechMaster/core/pmodel"
 	"github.com/TechMaster/core/rbac"
@@ -21,20 +22,15 @@ type LoginRequest struct {
 }
 
 func ShowHomePage(ctx iris.Context) {
-	if raw_authinfo := ctx.GetViewData()[session.AUTHINFO]; raw_authinfo != nil {
-		authinfo := raw_authinfo.(*pmodel.AuthenInfo)
+	if authinfo := session.GetAuthInfo(ctx); authinfo != nil {
 		ctx.ViewData("roles", rbac.RolesNames(authinfo.Roles))
 	}
+
 	_ = ctx.View("index")
 }
 
 func ShowSecret(ctx iris.Context) {
-	// Check if user is authenticated
-	if !session.IsLogin(ctx) {
-		ctx.StatusCode(iris.StatusForbidden)
-		return
-	}
-	_, _ = ctx.WriteString("Secret Page")
+	logger.Info(ctx, "Đây là trang tuyệt mật")
 }
 
 /*
@@ -71,14 +67,6 @@ func Login(ctx iris.Context) {
 }
 
 func LogoutFromWeb(ctx iris.Context) {
-	logout(ctx)
+	session.Logout(ctx)
 	ctx.Redirect("/")
-}
-
-func logout(ctx iris.Context) {
-	/*	if !session.IsLogin(ctx) {
-		logger.Log(ctx, eris.Warning("Bạn chưa login").UnAuthorized())
-	}*/
-	//Xoá toàn bộ session và xoá luôn cả Cookie sessionid ở máy người dùng
-	session.Sess.Destroy(ctx)
 }
