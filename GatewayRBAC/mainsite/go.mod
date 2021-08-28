@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/BurntSushi/toml v0.4.1 // indirect
-	github.com/TechMaster/core v0.1.24
+	github.com/TechMaster/core v0.1.25
 	github.com/TechMaster/eris v0.1.10
 	github.com/TechMaster/logger v0.1.13
 	github.com/kataras/iris/v12 v12.2.0-alpha2.0.20210717090056-b2cc3a287149

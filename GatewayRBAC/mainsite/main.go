@@ -4,11 +4,11 @@ import (
 	"mainsite/router"
 
 	"github.com/TechMaster/core/config"
+	"github.com/TechMaster/core/logger"
 	"github.com/TechMaster/core/rbac"
 	"github.com/TechMaster/core/session"
 	"github.com/TechMaster/core/template"
 
-	"github.com/TechMaster/logger"
 	"github.com/kataras/iris/v12"
 	"github.com/spf13/viper"
 )

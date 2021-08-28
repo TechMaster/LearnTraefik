@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"github.com/TechMaster/core/logger"
 	"github.com/TechMaster/eris"
-	"github.com/TechMaster/logger"
 	"github.com/kataras/iris/v12"
 )
 
@@ -13,6 +13,11 @@ func BackupDB(ctx iris.Context) {
 //GET /upload
 func ShowUploadForm(ctx iris.Context) {
 	_ = ctx.View("upload")
+}
+
+//GET /err
+func ShowErr(ctx iris.Context) {
+	logger.Log(ctx, eris.New("This is error for test"))
 }
 
 /*

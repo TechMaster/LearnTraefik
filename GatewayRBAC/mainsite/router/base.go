@@ -38,6 +38,7 @@ func RegisterRoute(app *iris.Application) {
 	{
 		rbac.Get(sysop, "/backupdb", rbac.Allow(rbac.MAINTAINER), controller.BackupDB)
 		rbac.Get(sysop, "/upload", rbac.Allow(rbac.MAINTAINER), controller.ShowUploadForm)
+		rbac.Get(sysop, "/err", rbac.AllowAll(), controller.ShowErr)
 		rbac.Post(sysop, "/upload", rbac.Allow(rbac.MAINTAINER, rbac.SALE), iris.LimitRequestBodySize(300000), controller.UploadPhoto)
 	}
 

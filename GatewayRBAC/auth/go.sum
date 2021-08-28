@@ -65,6 +65,8 @@ github.com/TechMaster/core v0.1.23 h1:Pa2NC5Vf0fAejsxJ7cgxigJgfWfT8BtH2SDkDSFOOr
 github.com/TechMaster/core v0.1.23/go.mod h1:KLsJUYm3CYV9J2vMPSYpTwI6n73htY+8yjZ0Tjmf28A=
 github.com/TechMaster/core v0.1.24 h1:qHME/upHoluJ7LxmlbhXRNI6CyC+UscS+zQHu0axk2s=
 github.com/TechMaster/core v0.1.24/go.mod h1:KLsJUYm3CYV9J2vMPSYpTwI6n73htY+8yjZ0Tjmf28A=
+github.com/TechMaster/core v0.1.25 h1:KpWuMCccQBaBuRmciVueA3WuESeGRLykklUa90qyXpA=
+github.com/TechMaster/core v0.1.25/go.mod h1:KLsJUYm3CYV9J2vMPSYpTwI6n73htY+8yjZ0Tjmf28A=
 github.com/TechMaster/eris v0.1.10 h1:OH6ntOf1Z4NZzXPUoSEotOERofvCgzqBuU7uYnb7FVs=
 github.com/TechMaster/eris v0.1.10/go.mod h1:kLyEzmhX9+khT0cY520nl8RtAZGbH/MAI+CnypKsJo8=
 github.com/TechMaster/logger v0.1.13 h1:Sbykm3cKbbOgN34pRGsZ1vj6LEJu91VPuBVoPkIqMFM=
