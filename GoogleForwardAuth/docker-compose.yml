@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:v2.5
+    command:      
+      - --providers.docker
+      - --api.insecure=false
+      - --api.dashboard=true
+      - --entryPoints.web.address=:80
+      - --entryPoints.api.address=:8080
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"                             
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.entrypoints=api"   
+      - "traefik.http.routers.api.middlewares=auth"                          # Tell our route to use a middleware named `auth`
+      - "traefik.http.routers.dashboard.service=dashboard@internal"
+      - "traefik.http.routers.dashboard.entrypoints=api"   
+      - "traefik.http.routers.dashboard.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=cuong:$2y$10$xIt4uSqgaXTTcwtoSjZEpucrcyvj/gsf6znf3MJrTZFtN9Dax7pP6"
+
+
+  whoami:
+    image: traefik/whoami
+    labels:
+      - "traefik.http.routers.whoami.rule=Host(`localhost`) && PathPrefix(`/whoami`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+      - "traefik.http.routers.whoami.middlewares=traefik-forward-auth"
+
+  traefik-forward-auth:
+    image: thomseddon/traefik-forward-auth:2
+    environment:
+      - PROVIDERS_GOOGLE_CLIENT_ID=1088344376413-lv7dcdjbid05os481a2rfm024leavg4k.apps.googleusercontent.com
+      - PROVIDERS_GOOGLE_CLIENT_SECRET=TOcTShnaeulTPpTHjVUywXyv
+      - SECRET=abc123
+      - INSECURE_COOKIE=true
+      - LOG_LEVEL=debug
+    labels:
+      - "traefik.http.middlewares.traefik-forward-auth.forwardauth.address=http://traefik-forward-auth:4181"
+      - "traefik.http.middlewares.traefik-forward-auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+      - "traefik.http.services.traefik-forward-auth.loadbalancer.server.port=4181"
